@@ -61,11 +61,8 @@ class SVG {
         c2.setAttribute('fill-opacity', 1);
 
 
-
         // c1.setAttribute('circle', `cx="${this.t0.x}" cy="${this.t0.y}" r="10"`);
         // c2.setAttribute('circle', `cx="${this.t1.x}" cy="${this.t1.y}" r="10"` );
-
-
         this.containerID.prepend(c1);
         this.containerID.prepend(c2);
     }
@@ -93,6 +90,7 @@ class SVG {
 
 
         p.setAttribute('d', string);
+        p.setAttribute('stroke', "url(#grad1)");
         log(this.path);
     }
 
@@ -111,5 +109,9 @@ class SVG {
 var p = new SVG(new Point(20, 20), new Point(580, 580));
 p.setContainer(svg);
 p.generate();
-p.pushLine();
 p.generateDots();
+p.pushLine();
+
+var path = document.querySelector('path');
+var length = path.getTotalLength();
+svg.style.cssText =`stroke-dasharray: ${length};stroke-dashoffset: ${length};`;
