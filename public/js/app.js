@@ -30,7 +30,7 @@ class SVG {
     width = 500;
     height = 500;
 
-    constructor(t0, t1, pointsCount = 5) {
+    constructor(t0, t1, pointsCount = 10) {
         this.t0 = t0;//Point
         this.t1 = t1;//Point
         this.pointsCount = pointsCount;
