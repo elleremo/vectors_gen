@@ -5,10 +5,25 @@ var line = "M36,38 Q188,177 138,104 T399,74";
 log(line);
 
 
+
 class Point {
-    constructor(x, y) {
+    constructor(x, y, color) {
         this.x = x;
         this.y = y;
+        this.color = color;
+        this.draw()
+    }
+
+    draw(){
+        var c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        c.setAttribute('cx', this.x);
+        c.setAttribute('cy', this.y);
+        c.setAttribute('r', 5);
+        c.setAttribute('fill-opacity', 1);
+        c.setAttribute('fill', this.color);
+        c.setAttribute('stroke-width', 2);
+
+        svg.prepend(c);
     }
 }
 
@@ -27,25 +42,25 @@ class SVG {
 
     lineArray = [];
     color = '#eff';
-    width = 500;
-    height = 500;
+    width = 600;
+    height = 600;
 
-    constructor(t0, t1, pointsCount = 10) {
+    constructor(t0, t1, pointsCount =2) {
         this.t0 = t0;//Point
         this.t1 = t1;//Point
         this.pointsCount = pointsCount;
     }
 
-    setFrame(width, height) {
+    setFrame(width, height){
         this.width = width;
         this.height = height;
     }
 
-    setContainer(containerID) {
+    setContainer(containerID){
         this.containerID = containerID;
     }
 
-    generateDots(){
+    generateDots() {
         var c1 = document.createElementNS("http://www.w3.org/2000/svg", "circle");
         var c2 = document.createElementNS("http://www.w3.org/2000/svg", "circle");
 
@@ -76,17 +91,21 @@ class SVG {
         var start = this.t0;
         var end = this.t1;
 
-        var string = `M${start.x},${start.y}`;
+        var string = `M${start.x},${start.y} `;
 
-
-
-        for (var i = 0; i < this.pointsCount; i++) {
-            var r = this.getRandPoint();
-            var r2 = this.getRandPoint();
-            string += ` S${r.x},${r.y} ${r2.x},${r2.y}`
+        for (var i = 0; i <this.pointsCount; i++) {
+            var q = this.getRandPoint('#ffffff');
+            var m = this.getRandPoint('#356bff');
+            var t = this.getRandPoint();
+            string += ` Q${q.x},${q.y} ${m.x},${m.y} T${t.x},${t.y} `;
+            // string += `${q.x},${q.y} A${m.x},${m.y} `
         }
 
-        string += ` S${r.x},${r.y} ${end.x},${end.y}`;
+        // var re = this.getRandPoint('#ffffff');
+        // q = this.getRandPoint('#0b4eff');
+        // m = this.getRandPoint('#ff52df');
+        // t = this.getRandPoint('');
+        // string += `S${q.x},${q.y} ${end.x},${end.y}`;
 
 
         p.setAttribute('d', string);
@@ -98,10 +117,17 @@ class SVG {
         this.containerID.prepend(this.path);
     }
 
-    getRandPoint(min = 0) {
-        var x = Math.floor(Math.random() * (this.width - 50) + 50);
-        var y = Math.floor(Math.random() * (this.height - 50) + 50);
-        return new Point(x, y);
+    getRandPoint(color ='') {
+        var max = 5;
+        var min = 1;
+        // var x = Math.floor(Math.random() * (max - min) + min);
+        // var y = Math.floor(Math.random() * (max - min) + min);
+
+
+        var x = Math.floor(min + Math.random() * (max + 1 - min)) * 100;
+        var y = Math.floor(min + Math.random() * (max + 1 - min)) * 100;
+
+        return new Point(x, y, color);
     }
 
 }
@@ -109,9 +135,11 @@ class SVG {
 var p = new SVG(new Point(20, 20), new Point(580, 580));
 p.setContainer(svg);
 p.generate();
-p.generateDots();
+// p.generateDots();
 p.pushLine();
 
 var path = document.querySelector('path');
 var length = path.getTotalLength();
 svg.style.cssText =`stroke-dasharray: ${length};stroke-dashoffset: ${length};`;
+svg.setAttributeNS(null, 'width', '100%');
+svg.setAttributeNS(null, 'height', '100%');
