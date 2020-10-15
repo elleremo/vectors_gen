@@ -19,9 +19,9 @@ class Point {
         c.setAttribute('cx', this.x);
         c.setAttribute('cy', this.y);
         c.setAttribute('r', 5);
-        c.setAttribute('fill-opacity', 1);
+        c.setAttribute('fill-opacity', 0);
         c.setAttribute('fill', this.color);
-        c.setAttribute('stroke-width', 2);
+        c.setAttribute('stroke-width', 0);
 
         svg.prepend(c);
     }
@@ -41,7 +41,7 @@ class Line {
 class SVG {
 
     lineArray = [];
-    color = '#eff';
+    color = '';
     width = 600;
     height = 600;
 
@@ -67,12 +67,12 @@ class SVG {
 
         c1.setAttribute('cx', this.t0.x);
         c1.setAttribute('cy', this.t0.y);
-        c1.setAttribute('r', 5);
+        c1.setAttribute('r', 0);
         c1.setAttribute('fill-opacity', 0);
 
         c2.setAttribute('cx', this.t1.x);
         c2.setAttribute('cy', this.t1.y);
-        c2.setAttribute('r', 5);
+        c2.setAttribute('r', 0);
         c2.setAttribute('fill-opacity', 0);
 
 
