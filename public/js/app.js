@@ -45,7 +45,7 @@ class SVG {
     width = 600;
     height = 600;
 
-    constructor(t0, t1, pointsCount =2) {
+    constructor(t0, t1, pointsCount =20) {
         this.t0 = t0;//Point
         this.t1 = t1;//Point
         this.pointsCount = pointsCount;
@@ -68,12 +68,12 @@ class SVG {
         c1.setAttribute('cx', this.t0.x);
         c1.setAttribute('cy', this.t0.y);
         c1.setAttribute('r', 5);
-        c1.setAttribute('fill-opacity', 1);
+        c1.setAttribute('fill-opacity', 0);
 
         c2.setAttribute('cx', this.t1.x);
         c2.setAttribute('cy', this.t1.y);
         c2.setAttribute('r', 5);
-        c2.setAttribute('fill-opacity', 1);
+        c2.setAttribute('fill-opacity', 0);
 
 
         // c1.setAttribute('circle', `cx="${this.t0.x}" cy="${this.t0.y}" r="10"`);
@@ -94,18 +94,13 @@ class SVG {
         var string = `M${start.x},${start.y} `;
 
         for (var i = 0; i <this.pointsCount; i++) {
-            var q = this.getRandPoint('#ffffff');
-            var m = this.getRandPoint('#356bff');
+            var q = this.getRandPoint('');
+            var m = this.getRandPoint('');
             var t = this.getRandPoint();
             string += ` Q${q.x},${q.y} ${m.x},${m.y} T${t.x},${t.y} `;
             // string += `${q.x},${q.y} A${m.x},${m.y} `
         }
 
-        // var re = this.getRandPoint('#ffffff');
-        // q = this.getRandPoint('#0b4eff');
-        // m = this.getRandPoint('#ff52df');
-        // t = this.getRandPoint('');
-        // string += `S${q.x},${q.y} ${end.x},${end.y}`;
 
 
         p.setAttribute('d', string);
